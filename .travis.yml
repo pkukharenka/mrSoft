@@ -1,7 +1,0 @@
-# используем язык java. Travis CI поддерживает другие языки тоже.
-language: java
-# используем режим обычного пользователя для сборки проекта.
-sudo: false
-
-before_install:
-  - chmod +x mvnw
