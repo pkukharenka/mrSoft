@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>MrSoftApp</title>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
+    <link href="styles/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body ng-app="app" ng-cloak>
+<div ng-include="'header.html'"></div>
+<div class="container-fluid">
+    <div ng-view id="container"></div>
+</div>
+
+<!--Libraries-->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
+
+<!--Main-->
+<script src="app.js"></script>
+
+<!--Components-->
+<script src="components/main/main.controller.js"></script>
+<script src="components/dialog/dialog.controller.js"></script>
+<script src="components/second/second.controller.js"></script>
+<script src="components/upload/upload.controller.js"></script>
+
+<!--Services-->
+<script src="services/product.service.js"></script>
+<script src="services/second.service.js"></script>
+
+<!--Filters-->
+<script src="filters/lenght.filter.js"></script>
+<script src="filters/sensitive.filter.js"></script>
+<script src="filters/checked.filter.js"></script>
+
+<!--Directives-->
+<script src="directives/fileUpload.directive.js"></script>
+
+</body>
+</html>

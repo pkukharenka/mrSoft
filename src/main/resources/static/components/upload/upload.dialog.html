@@ -1,0 +1,18 @@
+<md-dialog flex="40">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h3>Форма загрузки</h3>
+            <span flex></span>
+        </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+        <form name="uploadForm" novalidate ng-submit="uploadFile()">
+            <div class="md-dialog-content">
+                <input type="file" file-model="filename">
+                <button class="btn btn-primary" type="submit">Submit</button>
+                <button class="btn btn-warning" ng-click="cancelForm()">Cancel</button>
+            </div>
+        </form>
+    </md-dialog-content>
+</md-dialog>

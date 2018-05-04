@@ -1,0 +1,71 @@
+<md-dialog flex="40">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h3>Форма добавления (обновления) продукта</h3>
+            <span flex></span>
+        </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+        <form name="productForm" novalidate ng-submit="saveProduct(product)">
+            <div class="md-dialog-content">
+                <md-input-container class="md-block">
+                    <label>Категория товара: </label>
+                    <md-select name="category" ng-model="product.category.id" placeholder="Категория" required>
+                        <md-option ng-repeat="cat in categories"
+                                   value="{{cat.id}}"
+                                   ng-selected="cat.id == product.category.id">{{cat.name}}
+                        </md-option>
+                    </md-select>
+                    <div ng-messages="productForm.category.$error">
+                        <div ng-message="required">Укажите категорию товара</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Название товара:</label>
+                    <input type="text"
+                           name="name"
+                           ng-model="product.name"
+                           md-maxlength="255"
+                           required>
+                    <div ng-messages="productForm.name.$error">
+                        <div ng-message="required">Укажите наименование товара</div>
+                        <div ng-message="md-maxlength">Наименование товара должно быть не более 255 символов</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Цена товара:</label>
+                    <input type="number"
+                           name="price"
+                           ng-model="product.price"
+                           required>
+                    <div ng-messages="productForm.price.$error">
+                        <div ng-message="required">Укажите цену товара</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Количество товара:</label>
+                    <input type="number"
+                           name="count"
+                           ng-model="product.count"
+                           required>
+                    <div ng-messages="productForm.count.$error">
+                        <div ng-message="required">Укажите количество товара</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Описание товара:</label>
+                    <textarea
+                            name="description"
+                            ng-model="product.description"
+                            md-maxlength="1000"></textarea>
+                    <div ng-messages="productForm.count.$error">
+                        <div ng-message="md-maxlength">Описание не более 1000 символов</div>
+                    </div>
+                </md-input-container>
+                <button class="btn btn-primary" type="submit">Submit</button>
+                <button class="btn btn-warning" ng-click="cancelForm()">Cancel</button>
+            </div>
+        </form>
+    </md-dialog-content>
+</md-dialog>
