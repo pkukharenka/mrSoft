@@ -1,4 +1,4 @@
-# Тестовое задание для MrSoft.by [![Build Status](https://travis-ci.org/pkukharenka/mrSoft.svg?branch=master)](https://travis-ci.org/pkukharenka/mrSoft)
+# Тестовое задание для MrSoft.by
 
 
 ## Запуск приложения на локальной машине
