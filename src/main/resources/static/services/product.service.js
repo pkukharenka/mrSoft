@@ -4,8 +4,6 @@ productService.$inject = ['$http', '$log'];
 
 function productService($http, $log) {
 
-    const domain = 'http://localhost:8080';
-
     return {
         getProducts: getProducts,
         loadCategories: loadCategories,
@@ -16,31 +14,31 @@ function productService($http, $log) {
     };
 
     function getProducts() {
-        return $http.get(domain + '/product/')
+        return $http.get('/product/')
             .then(completeFunc)
             .catch(errorFunc)
     }
 
     function loadCategories() {
-        return $http.get(domain + '/category/')
+        return $http.get('/category/')
             .then(completeFunc)
             .catch(errorFunc)
     }
 
     function saveProduct(product) {
-        return $http.post(domain + '/product/', product)
+        return $http.post('/product/', product)
             .then(completeFunc)
             .catch(errorFunc)
     }
 
     function deleteProduct(id) {
-        return $http.post(domain + '/product/delete/', id)
+        return $http.post('/product/delete/', id)
             .then(completeFunc)
             .catch(errorFunc)
     }
 
     function download() {
-        return $http.get(domain + '/product/download/')
+        return $http.get('/product/download/')
             .then(completeFunc)
             .catch(errorFunc)
     }
@@ -48,7 +46,7 @@ function productService($http, $log) {
     function upload(files) {
         var fd = new FormData();
         fd.append('file', files);
-        return $http.post(domain + '/product/upload/', fd, {
+        return $http.post('/product/upload/', fd, {
             headers: {'Content-Type': undefined},
             transformRequest: angular.identity
         })
