@@ -3,7 +3,9 @@ angular.module('app').controller('UploadController', UploadController);
 UploadController.$inject = ['$scope', '$mdDialog', 'productService'];
 
 function UploadController($scope, $mdDialog, productService) {
-    $scope.filename = [];
+
+    $scope.dataFiles = [];
+
     $scope.uploadFile = uploadFile;
 
     $scope.cancelForm = function () {
@@ -11,7 +13,9 @@ function UploadController($scope, $mdDialog, productService) {
     };
 
     function uploadFile() {
-        console.log($scope.filename);
-        productService.upload($scope.filename)
+        productService.upload($scope.dataFiles)
+            .then(function () {
+                $mdDialog.hide();
+            })
     }
 }

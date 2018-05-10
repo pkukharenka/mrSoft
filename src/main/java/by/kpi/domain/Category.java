@@ -36,4 +36,7 @@ public class Category {
     @CsvBindByName
     private String name;
 
+    public Category(Long id) {
+        this.id = id;
+    }
 }

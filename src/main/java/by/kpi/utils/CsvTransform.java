@@ -56,7 +56,7 @@ public class CsvTransform<T> {
     public List<T> csvToBean(final MultipartFile multipartFile) {
         List<T> list = new ArrayList<>();
         final File file = this.convertMultipartFile(multipartFile);
-        try (Reader reader = new FileReader(file)) {
+        try (Reader reader = Files.newBufferedReader(Paths.get(file.getName()))) {
             CsvToBean<T> fromCsv = new CsvToBeanBuilder<T>(reader).withType(this.entityClass).build();
             list = fromCsv.parse();
         } catch (IOException e) {
@@ -73,9 +73,10 @@ public class CsvTransform<T> {
      * @return - объект типа File
      */
     private File convertMultipartFile(final MultipartFile multipartFile) {
-        final File file = new File(multipartFile.getOriginalFilename());
+        File file = new File(multipartFile.getOriginalFilename());
         try (FileOutputStream fos = new FileOutputStream(file)) {
             fos.write(multipartFile.getBytes());
+            System.out.println(file.length() + " " + file.getAbsolutePath());
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         }

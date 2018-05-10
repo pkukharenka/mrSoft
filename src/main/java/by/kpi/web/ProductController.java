@@ -6,19 +6,19 @@ import by.kpi.utils.CsvTransform;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author Pyotr Kukharenka
@@ -33,7 +33,7 @@ public class ProductController {
 
     private final ProductService productService;
     private static final String FILE_NAME = "products.csv";
-    private final CsvTransform<Product> csv = new CsvTransform<>(Product.class);
+    private final CsvTransform<ProductDto> csv = new CsvTransform<>(ProductDto.class);
 
     @Autowired
     public ProductController(ProductService productService) {
@@ -57,32 +57,24 @@ public class ProductController {
     }
 
     @GetMapping(path = "/download")
-    public ResponseEntity<ByteArrayResource> download(HttpServletRequest request) {
-        List<Product> products = this.productService.findAll();
+    public ResponseEntity<Resource> download() throws IOException {
+        List<ProductDto> products = this.productService.findAll().stream()
+                .map(product -> new ProductDto(
+                        product.getId(),
+                        product.getName(),
+                        product.getCount(),
+                        product.getPrice(),
+                        product.getDescription(),
+                        product.getCategory().getId()))
+                .collect(Collectors.toList());
         this.csv.beanToCsv(FILE_NAME, products);
         Path path = Paths.get(FILE_NAME);
-        String contentType = request.getServletContext().getMimeType(FILE_NAME);
-        if (contentType == null) {
-            contentType = "application/octet-stream";
-        }
-        ResponseEntity<ByteArrayResource> response = null;
-        try {
-            ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
-            response = ResponseEntity.ok()
-                    .contentType(MediaType.parseMediaType(contentType))
-                    .contentLength(resource.contentLength())
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + path.getFileName().toString())
-                    .body(resource);
-        } catch (IOException e) {
-            log.error(e.getMessage(), e);
-        }
-        return response;
-
-    }
-
-    @PostMapping(path = "/upload")
-    public List<Product> upload(@RequestPart(value = "file") MultipartFile multipartFile) {
-        return this.productService.saveAll(this.csv.csvToBean(multipartFile));
+        Resource resource = new ByteArrayResource(Files.readAllBytes(path));
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .contentLength(resource.contentLength())
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .body(resource);
     }
 
 }

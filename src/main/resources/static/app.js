@@ -2,9 +2,10 @@ angular.module('app', ['ngRoute', 'ngMaterial', 'ngMessages']);
 
 angular.module('app').config(config);
 
-config.$inject = ['$routeProvider', '$locationProvider'];
+config.$inject = ['$routeProvider', '$locationProvider', '$httpProvider'];
 
-function config($routeProvider, $locationProvider) {
+function config($routeProvider, $locationProvider, $httpProvider) {
+    $httpProvider.defaults.useXDomain = true;
     $locationProvider.hashPrefix('');
     $routeProvider
         .when('/product/', {
@@ -15,7 +16,7 @@ function config($routeProvider, $locationProvider) {
                     return productService.getProducts()
                 },
                 'getCategories': function (productService) {
-                    return productService.loadCategories()
+                    return productService.getCategories()
                 }
             }
         })

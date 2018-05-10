@@ -6,9 +6,11 @@ function productService($http, $log) {
 
     return {
         getProducts: getProducts,
-        loadCategories: loadCategories,
+        getCategories: getCategories,
         saveProduct: saveProduct,
+        saveCategory: saveCategory,
         deleteProduct: deleteProduct,
+        deleteCategory: deleteCategory,
         download: download,
         upload: upload
     };
@@ -19,7 +21,7 @@ function productService($http, $log) {
             .catch(errorFunc)
     }
 
-    function loadCategories() {
+    function getCategories() {
         return $http.get('/category/')
             .then(completeFunc)
             .catch(errorFunc)
@@ -31,8 +33,20 @@ function productService($http, $log) {
             .catch(errorFunc)
     }
 
+    function saveCategory(category) {
+        return $http.post('/category/', category)
+            .then(completeFunc)
+            .catch(errorFunc)
+    }
+
     function deleteProduct(id) {
         return $http.post('/product/delete/', id)
+            .then(completeFunc)
+            .catch(errorFunc)
+    }
+
+    function deleteCategory(id) {
+        return $http.post('/category/delete/', id)
             .then(completeFunc)
             .catch(errorFunc)
     }
@@ -45,8 +59,10 @@ function productService($http, $log) {
 
     function upload(files) {
         var fd = new FormData();
-        fd.append('file', files);
-        return $http.post('/product/upload/', fd, {
+        angular.forEach(files, function (val) {
+            fd.append('files', val);
+        });
+        return $http.post('/load/', fd, {
             headers: {'Content-Type': undefined},
             transformRequest: angular.identity
         })

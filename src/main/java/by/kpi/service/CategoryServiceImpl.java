@@ -2,18 +2,19 @@ package by.kpi.service;
 
 import by.kpi.domain.Category;
 import by.kpi.repository.CategoryRepository;
+import by.kpi.utils.CsvTransform;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
 
 /**
- *
  * @author Pyotr Kukharenka
  * @since 27.04.2018
  */
@@ -24,6 +25,7 @@ import java.util.Optional;
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
+    private final CsvTransform<Category> csv = new CsvTransform<>(Category.class);
 
     @Autowired
     public CategoryServiceImpl(CategoryRepository categoryRepository) {
@@ -49,5 +51,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Optional<Category> findById(Long id) {
         return this.categoryRepository.findById(id);
+    }
+
+    public List<Category> saveAll(MultipartFile multipartFile) {
+        List<Category> categories = this.csv.csvToBean(multipartFile);
+        return this.categoryRepository.saveAll(categories);
     }
 }

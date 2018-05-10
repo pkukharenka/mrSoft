@@ -1,6 +1,7 @@
 package by.kpi.service;
 
 import by.kpi.domain.Category;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,5 +18,6 @@ public interface CategoryService {
     void delete(Category category);
     List<Category> findAll();
     Optional<Category> findById(Long id);
+    List<Category> saveAll(MultipartFile multipartFile);
 
 }

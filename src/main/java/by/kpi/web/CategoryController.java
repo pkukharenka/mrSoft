@@ -3,15 +3,11 @@ package by.kpi.web;
 import by.kpi.domain.Category;
 import by.kpi.service.CategoryService;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Pyotr Kukharenka
@@ -34,5 +30,16 @@ public class CategoryController {
     @GetMapping("/")
     public List<Category> getCategories() {
         return categoryService.findAll();
+    }
+
+    @PostMapping("/")
+    public Category save(@RequestBody Category category) {
+        return this.categoryService.save(category);
+    }
+
+    @PostMapping("/delete")
+    public void delete(@RequestBody Long id) {
+        final Optional<Category> category = this.categoryService.findById(id);
+        category.ifPresent(this.categoryService::delete);
     }
 }

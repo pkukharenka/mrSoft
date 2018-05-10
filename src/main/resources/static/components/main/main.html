@@ -1,10 +1,15 @@
 <div class="row">
     <div class="col-sm-2">
+        <md-button class="md-fab md-mini md-primary" ng-click="addCategory()" aria-label="Use Android">
+            <md-tooltip>Добавить(редактировать) категорию</md-tooltip>
+            <md-icon md-svg-src="icons/folder-open.svg"></md-icon>
+        </md-button>
         <md-button class="md-fab md-mini md-primary" ng-click="manageProduct($event)" aria-label="Use Android">
             <md-tooltip>Добавить продукт</md-tooltip>
             <md-icon md-svg-src="icons/plus.svg"></md-icon>
         </md-button>
-        <md-button class="md-fab md-mini md-warn" ng-disabled="products | checkedFilter" ng-click="deleteProducts()" aria-label="Use Android">
+        <md-button class="md-fab md-mini md-warn" ng-disabled="products | checkedFilter" ng-click="deleteProducts()"
+                   aria-label="Use Android">
             <md-tooltip>Удалить продукт</md-tooltip>
             <md-icon md-svg-src="icons/bin.svg"></md-icon>
         </md-button>

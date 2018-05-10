@@ -13,6 +13,7 @@ function SecondController($scope, $filter, getDataFromMrSoft) {
 
 
     function byLenght() {
+        console.log($scope.filtredData);
         $scope.filtredData = $filter('lengthFilter')(testValues.data, $scope.searchKey);
     }
 

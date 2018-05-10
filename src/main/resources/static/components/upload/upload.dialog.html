@@ -7,9 +7,17 @@
     </md-toolbar>
 
     <md-dialog-content>
-        <form name="uploadForm" novalidate ng-submit="uploadFile()">
+        <form name="uploadForm" ng-submit="uploadFile()">
             <div class="md-dialog-content">
-                <input type="file" file-model="filename">
+                <!--<label>Выберите файл с категориями</label>-->
+                <!--<md-input-container class="md-block">-->
+                    <!--<input type="file" name="category" file-model="filename[0]">-->
+                <!--</md-input-container>-->
+                <label>Выберите файл с данными</label>
+                <md-input-container class="md-block">
+                    <input type="file" file-model="dataFiles" multiple>
+                    <small class="text-muted">Файлы должны иметь расширение .csv</small>
+                </md-input-container>
                 <button class="btn btn-primary" type="submit">Submit</button>
                 <button class="btn btn-warning" ng-click="cancelForm()">Cancel</button>
             </div>

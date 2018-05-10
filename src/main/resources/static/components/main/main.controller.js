@@ -14,6 +14,7 @@ function MainController($scope, $mdDialog, $route, $q, getAllProducts, getCatego
     $scope.check = check;
     $scope.download = download;
     $scope.upload = upload;
+    $scope.addCategory = addCategory;
 
     function manageProduct(ev, product) {
         $mdDialog.show({
@@ -44,7 +45,6 @@ function MainController($scope, $mdDialog, $route, $q, getAllProducts, getCatego
                 el.checked = false;
             })
         }
-
     }
 
     function deleteProducts() {
@@ -60,7 +60,11 @@ function MainController($scope, $mdDialog, $route, $q, getAllProducts, getCatego
     }
 
     function download() {
-        productService.download();
+        productService.download()
+            .then(function (response) {
+                console.log(response);
+                $scope.uploadedFile = response.data;
+            });
     }
 
     function upload() {
@@ -68,9 +72,22 @@ function MainController($scope, $mdDialog, $route, $q, getAllProducts, getCatego
             controller: UploadController,
             templateUrl: './components/upload/upload.dialog.html',
             parent: angular.element(document.body),
+            onRemoving: updateTable,
             clickOutsideToClose: true
         })
     }
 
+    function addCategory() {
+        $mdDialog.show({
+            controller: CategoryController,
+            locals: {
+                categories: $scope.categories
+            },
+            templateUrl: './components/category/category.html',
+            parent: angular.element(document.body),
+            onRemoving: updateTable,
+            clickOutsideToClose: true
+        })
+    }
 
 }

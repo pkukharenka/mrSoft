@@ -8,6 +8,7 @@ function secondService($http, $log) {
         findValues: findValues
     };
 
+
     function findValues() {
         return $http.get('http://www.mrsoft.by/data.json')
             .then(funcComplete)
@@ -19,6 +20,6 @@ function secondService($http, $log) {
     }
 
     function funcError(error) {
-        $log.error(error);
+        $log.error('Handle error ', error);
     }
 }

@@ -12,9 +12,13 @@ function fileModel($parse) {
         var model = $parse(attrs.fileModel);
         var modelSetter = model.assign;
 
-        element.bind('change', function () {
-            scope.$apply(function () {
-                modelSetter(scope, element[0].files[0]);
+        element.bind('change', function(){
+            var files = [];
+            angular.forEach(element[0].files, function (file) {
+                files.push(file)
+            });
+            scope.$apply(function(){
+                modelSetter(scope, files);
             });
         });
     }
