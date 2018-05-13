@@ -57,12 +57,10 @@ function productService($http, $log) {
             .catch(errorFunc)
     }
 
-    function upload(files) {
+    function upload(file) {
         var fd = new FormData();
-        angular.forEach(files, function (val) {
-            fd.append('files', val);
-        });
-        return $http.post('/load/', fd, {
+        fd.append('file', file[0]);
+        return $http.post('/product/upload/', fd, {
             headers: {'Content-Type': undefined},
             transformRequest: angular.identity
         })

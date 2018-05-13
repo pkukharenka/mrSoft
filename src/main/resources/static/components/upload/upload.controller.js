@@ -4,18 +4,25 @@ UploadController.$inject = ['$scope', '$mdDialog', 'productService'];
 
 function UploadController($scope, $mdDialog, productService) {
 
-    $scope.dataFiles = [];
-
+    $scope.dataFile = [];
+    $scope.invalid = false;
     $scope.uploadFile = uploadFile;
+    $scope.cancelForm = cancelForm;
 
-    $scope.cancelForm = function () {
+    function cancelForm() {
         $mdDialog.cancel();
-    };
+    }
 
     function uploadFile() {
-        productService.upload($scope.dataFiles)
-            .then(function () {
-                $mdDialog.hide();
-            })
+        if ($scope.dataFile[0] !== undefined && $scope.dataFile[0].name.split('.').pop() === 'csv') {
+            $scope.invalid = false;
+            productService.upload($scope.dataFile)
+                .then(function () {
+                    $mdDialog.hide();
+                })
+        } else {
+            $scope.invalid = true;
+        }
+
     }
 }

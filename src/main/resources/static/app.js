@@ -6,6 +6,7 @@ config.$inject = ['$routeProvider', '$locationProvider', '$httpProvider'];
 
 function config($routeProvider, $locationProvider, $httpProvider) {
     $httpProvider.defaults.useXDomain = true;
+    delete $httpProvider.defaults.headers.common['X-Requested-With'];
     $locationProvider.hashPrefix('');
     $routeProvider
         .when('/product/', {

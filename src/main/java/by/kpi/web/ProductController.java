@@ -8,14 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,7 +33,7 @@ import java.util.stream.Collectors;
 public class ProductController {
 
     private final ProductService productService;
-    private static final String FILE_NAME = "products.csv";
+    private static final String FILE_NAME = "product.csv";
     private final CsvTransform<ProductDto> csv = new CsvTransform<>(ProductDto.class);
 
     @Autowired
@@ -56,7 +57,7 @@ public class ProductController {
         product.ifPresent(this.productService::delete);
     }
 
-    @GetMapping(path = "/download")
+    @GetMapping("/download")
     public ResponseEntity<Resource> download() throws IOException {
         List<ProductDto> products = this.productService.findAll().stream()
                 .map(product -> new ProductDto(
@@ -70,11 +71,22 @@ public class ProductController {
         this.csv.beanToCsv(FILE_NAME, products);
         Path path = Paths.get(FILE_NAME);
         Resource resource = new ByteArrayResource(Files.readAllBytes(path));
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(HttpHeaders.CONTENT_TYPE, "text/csv");
+        headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"");
         return ResponseEntity.ok()
-                .contentType(MediaType.APPLICATION_OCTET_STREAM)
                 .contentLength(resource.contentLength())
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .headers(headers)
                 .body(resource);
+    }
+
+    @PostMapping("/upload")
+    public List<Product> uploadFiles(@RequestPart("file") MultipartFile file) {
+        String[] fileParts = file.getOriginalFilename().split("\\.");
+        if (!fileParts[fileParts.length - 1].equalsIgnoreCase("csv")) {
+            throw new RuntimeException("File {} has invalid extension.");
+        }
+        return this.productService.saveAll(file);
     }
 
 }

@@ -60,11 +60,7 @@ function MainController($scope, $mdDialog, $route, $q, getAllProducts, getCatego
     }
 
     function download() {
-        productService.download()
-            .then(function (response) {
-                console.log(response);
-                $scope.uploadedFile = response.data;
-            });
+        productService.download();
     }
 
     function upload() {
