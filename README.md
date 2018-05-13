@@ -11,7 +11,7 @@
 
 Доступ к приложению можно получить по адресу: http://localhost:8080/
 
-##Первое задание (First task):
+## Первое задание (First task):
 
 ![First Task](./src/main/resources/images/First.png)
 
@@ -23,7 +23,7 @@
 на стороне клиента.
 ![Validation](./src/main/resources/images/Validation.png)
 
-##Второе задание (Second task):
+## Второе задание (Second task):
 
 ![Second Task](./src/main/resources/images/Second.png)
 
