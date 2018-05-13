@@ -5,18 +5,14 @@ import by.kpi.service.ProductService;
 import by.kpi.utils.CsvTransform;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.Resource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Arrays;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -33,7 +29,6 @@ import java.util.stream.Collectors;
 public class ProductController {
 
     private final ProductService productService;
-    private static final String FILE_NAME = "product.csv";
     private final CsvTransform<ProductDto> csv = new CsvTransform<>(ProductDto.class);
 
     @Autowired
@@ -58,8 +53,8 @@ public class ProductController {
     }
 
     @GetMapping("/download")
-    public ResponseEntity<Resource> download() throws IOException {
-        List<ProductDto> products = this.productService.findAll().stream()
+    public ResponseEntity<FileSystemResource> download() throws IOException {
+        final List<ProductDto> products = this.productService.findAll().stream()
                 .map(product -> new ProductDto(
                         product.getId(),
                         product.getName(),
@@ -68,9 +63,9 @@ public class ProductController {
                         product.getDescription(),
                         product.getCategory().getId()))
                 .collect(Collectors.toList());
-        this.csv.beanToCsv(FILE_NAME, products);
-        Path path = Paths.get(FILE_NAME);
-        Resource resource = new ByteArrayResource(Files.readAllBytes(path));
+        final String fileName = "products_" + LocalDate.now() + ".csv";
+        this.csv.beanToCsv(fileName, products);
+        FileSystemResource resource = new FileSystemResource(new File(fileName));
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.CONTENT_TYPE, "text/csv");
         headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"");

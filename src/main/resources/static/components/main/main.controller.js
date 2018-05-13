@@ -1,8 +1,8 @@
 angular.module('app').controller('MainController', MainController);
 
-MainController.$injetc = ['$scope', '$mdDialog', '$route', '$q', 'getAllProducts', 'getCategories', 'productService'];
+MainController.$injetc = ['$scope', '$mdDialog', '$route', '$q', '$window', 'getAllProducts', 'getCategories', 'productService'];
 
-function MainController($scope, $mdDialog, $route, $q, getAllProducts, getCategories, productService) {
+function MainController($scope, $mdDialog, $route, $q, $window, getAllProducts, getCategories, productService) {
 
     $scope.products = getAllProducts;
     $scope.categories = getCategories;
@@ -60,7 +60,7 @@ function MainController($scope, $mdDialog, $route, $q, getAllProducts, getCatego
     }
 
     function download() {
-        productService.download();
+        $window.location = '/product/download';
     }
 
     function upload() {

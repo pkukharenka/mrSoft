@@ -42,6 +42,7 @@ public class CsvTransform<T> {
         try (Writer writer = Files.newBufferedWriter(Paths.get(filename))) {
             StatefulBeanToCsv<T> toCsv = new StatefulBeanToCsvBuilder<T>(writer).build();
             toCsv.write(objects);
+            log.info("Csv write to file {} is successful. Write - {} records.", filename, objects.size());
         } catch (IOException | CsvRequiredFieldEmptyException | CsvDataTypeMismatchException e) {
             log.error(e.getMessage(), e);
         }
@@ -59,6 +60,7 @@ public class CsvTransform<T> {
         try (Reader reader = Files.newBufferedReader(Paths.get(file.getName()))) {
             CsvToBean<T> fromCsv = new CsvToBeanBuilder<T>(reader).withType(this.entityClass).build();
             list = fromCsv.parse();
+            log.info("Read from file {} is successful. Read - {} records.", file.getName(), list.size());
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         }
@@ -76,7 +78,8 @@ public class CsvTransform<T> {
         File file = new File(multipartFile.getOriginalFilename());
         try (FileOutputStream fos = new FileOutputStream(file)) {
             fos.write(multipartFile.getBytes());
-            System.out.println(file.length() + " " + file.getAbsolutePath());
+            log.info("MultiPart file is successful converted to File {}. File size - {}, file absolute path - {}.", file.getName(), file.length(),
+                    file.getAbsolutePath());
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         }

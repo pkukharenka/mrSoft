@@ -11,7 +11,6 @@ function productService($http, $log) {
         saveCategory: saveCategory,
         deleteProduct: deleteProduct,
         deleteCategory: deleteCategory,
-        download: download,
         upload: upload
     };
 
@@ -51,11 +50,9 @@ function productService($http, $log) {
             .catch(errorFunc)
     }
 
-    function download() {
-        return $http.get('/product/download/')
-            .then(completeFunc)
-            .catch(errorFunc)
-    }
+    // function download() {
+    //     return
+    // }
 
     function upload(file) {
         var fd = new FormData();
