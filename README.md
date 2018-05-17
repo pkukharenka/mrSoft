@@ -1,4 +1,7 @@
-# Тестовое задание для MrSoft.by [![Build Status](https://travis-ci.org/pkukharenka/mrSoft.svg?branch=master)](https://travis-ci.org/pkukharenka/mrSoft)
+[![Build Status](https://travis-ci.org/pkukharenka/mrSoft.svg?branch=master)](https://travis-ci.org/pkukharenka/mrSoft)
+[![codecov](https://codecov.io/gh/pkukharenka/mrSoft/branch/master/graph/badge.svg)](https://codecov.io/gh/pkukharenka/mrSoft)
+
+# Тестовое задание для MrSoft.by 
 
  Spring boot + AngularJS application. Демо - https://mr-soft.herokuapp.com/
 

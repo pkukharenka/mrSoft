@@ -24,13 +24,10 @@ import java.util.Optional;
 @Transactional
 public class CategoryServiceImpl implements CategoryService {
 
-    private final CategoryRepository categoryRepository;
-    private final CsvTransform<Category> csv = new CsvTransform<>(Category.class);
-
     @Autowired
-    public CategoryServiceImpl(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
-    }
+    private CategoryRepository categoryRepository;
+
+    private final CsvTransform<Category> csv = new CsvTransform<>(Category.class);
 
     @Override
     public Category save(Category category) {
@@ -53,6 +50,7 @@ public class CategoryServiceImpl implements CategoryService {
         return this.categoryRepository.findById(id);
     }
 
+    @Override
     public List<Category> saveAll(MultipartFile multipartFile) {
         List<Category> categories = this.csv.csvToBean(multipartFile);
         return this.categoryRepository.saveAll(categories);

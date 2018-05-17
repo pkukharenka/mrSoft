@@ -9,7 +9,7 @@ function config($routeProvider, $locationProvider, $httpProvider) {
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
     $locationProvider.hashPrefix('');
     $routeProvider
-        .when('/product/', {
+        .when('/', {
             templateUrl: './components/main/main.html',
             controller: MainController,
             resolve: {

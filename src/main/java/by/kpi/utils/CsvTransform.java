@@ -12,7 +12,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,11 +40,11 @@ public class CsvTransform<T> {
      * @param filename - имя файла, который будет создан
      * @param objects  - список обхектов для парсинга.
      */
-    public void beanToCsv(final String filename, List<T> objects) {
-        try (Writer writer = Files.newBufferedWriter(Paths.get(filename))) {
+    public void beanToCsv(final Path filename, List<T> objects) {
+        try (Writer writer = Files.newBufferedWriter(filename)) {
             StatefulBeanToCsv<T> toCsv = new StatefulBeanToCsvBuilder<T>(writer).build();
             toCsv.write(objects);
-            log.info("Csv write to file {} is successful. Write - {} records.", filename, objects.size());
+            log.info("Csv write to file {} is successful. Write - {} records.", filename.getFileName(), objects.size());
         } catch (IOException | CsvRequiredFieldEmptyException | CsvDataTypeMismatchException e) {
             log.error(e.getMessage(), e);
         }
@@ -57,7 +59,7 @@ public class CsvTransform<T> {
     public List<T> csvToBean(final MultipartFile multipartFile) {
         List<T> list = new ArrayList<>();
         final File file = this.convertMultipartFile(multipartFile);
-        try (Reader reader = Files.newBufferedReader(Paths.get(file.getName()))) {
+        try (Reader reader = Files.newBufferedReader(file.toPath())) {
             CsvToBean<T> fromCsv = new CsvToBeanBuilder<T>(reader).withType(this.entityClass).build();
             list = fromCsv.parse();
             log.info("Read from file {} is successful. Read - {} records.", file.getName(), list.size());
@@ -75,13 +77,24 @@ public class CsvTransform<T> {
      * @return - объект типа File
      */
     private File convertMultipartFile(final MultipartFile multipartFile) {
-        File file = new File(multipartFile.getOriginalFilename());
-        try (FileOutputStream fos = new FileOutputStream(file)) {
+        FileOutputStream fos = null;
+        File file = null;
+        try {
+            file = Files.createTempFile("temp", ".csv").toFile();
+            fos = new FileOutputStream(file);
             fos.write(multipartFile.getBytes());
             log.info("MultiPart file is successful converted to File {}. File size - {}, file absolute path - {}.", file.getName(), file.length(),
                     file.getAbsolutePath());
         } catch (IOException e) {
             log.error(e.getMessage(), e);
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    log.error(e.getMessage(), e);
+                }
+            }
         }
         return file;
     }

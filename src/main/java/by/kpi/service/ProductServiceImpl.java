@@ -27,13 +27,10 @@ import java.util.stream.Collectors;
 @Service
 public class ProductServiceImpl implements ProductService {
 
-    private final ProductRepository productRepository;
-    private final CsvTransform<ProductDto> csvConverter = new CsvTransform<>(ProductDto.class);
-
     @Autowired
-    public ProductServiceImpl(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
+    private ProductRepository productRepository;
+
+    private final CsvTransform<ProductDto> csv = new CsvTransform<>(ProductDto.class);
 
     @Override
     public Product save(Product product) {
@@ -41,8 +38,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> saveAll(MultipartFile multipartFile) {
-        List<Product> products = this.csvConverter.csvToBean(multipartFile)
+    public List<Product> saveAll(MultipartFile file) {
+        List<Product> products = this.csv.csvToBean(file)
                 .stream()
                 .map(productDto -> new Product(
                         productDto.getId(),

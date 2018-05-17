@@ -9,7 +9,7 @@
 </head>
 
 <body ng-app="app" ng-cloak>
-<div ng-include="'./header.html'"></div>
+<div ng-include="'./components/layout/header.html'" ng-controller="LayoutController"></div>
 <div class="container-fluid">
     <div ng-view id="container"></div>
 </div>
@@ -31,6 +31,7 @@
 <script src="components/second/second.controller.js"></script>
 <script src="components/upload/upload.controller.js"></script>
 <script src="components/category/category.controller.js"></script>
+<script src="components/layout/layout.controller.js"></script>
 
 <!--Services-->
 <script src="services/product.service.js"></script>

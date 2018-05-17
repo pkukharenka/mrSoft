@@ -17,7 +17,7 @@ import java.util.Optional;
 public interface ProductService {
 
     Product save(Product product);
-    List<Product> saveAll(MultipartFile multipartFile);
+    List<Product> saveAll(MultipartFile file);
     void delete(Product product);
     List<Product> findAll();
     Optional<Product> findById(Long id);

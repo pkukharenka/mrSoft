@@ -18,6 +18,6 @@ public interface CategoryService {
     void delete(Category category);
     List<Category> findAll();
     Optional<Category> findById(Long id);
-    List<Category> saveAll(MultipartFile multipartFile);
+    List<Category> saveAll(MultipartFile file);
 
 }
