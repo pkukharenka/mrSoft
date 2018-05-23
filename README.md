@@ -39,9 +39,9 @@ cd mr-test
 *The second task includes a field for entering user data, two
  buttons (by LENGTH and by SUBSTRING), when you click on which you select the values ​​in
  according to the entered data, and also buttons for switching on / off the sensitivity of the register
- when sampling the values ​​of the SUBSTRING software.
- The peculiarity of the second task is the use of a proxy to execute a query on the required URL,
- since the server to which the application accesses to retrieve data does not support cross-domain queries.*
+ when sampling the values by SUBSTRING.
+ The peculiarity of the second task is the use of a proxy to make requests on the required URL,
+ since the server to which the application accesses to retrieve data does not support cross-domain requests.*
 
 
 
