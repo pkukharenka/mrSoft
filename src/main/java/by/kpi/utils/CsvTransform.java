@@ -13,8 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,24 +75,16 @@ public class CsvTransform<T> {
      * @return - объект типа File
      */
     private File convertMultipartFile(final MultipartFile multipartFile) {
-        FileOutputStream fos = null;
         File file = null;
         try {
             file = Files.createTempFile("temp", ".csv").toFile();
-            fos = new FileOutputStream(file);
-            fos.write(multipartFile.getBytes());
-            log.info("MultiPart file is successful converted to File {}. File size - {}, file absolute path - {}.", file.getName(), file.length(),
-                    file.getAbsolutePath());
+            try (FileOutputStream fos = new FileOutputStream(file)) {
+                fos.write(multipartFile.getBytes());
+                log.info("MultiPart file is successful converted to File {}. File size - {}, file absolute path - {}.",
+                        file.getName(), file.length(), file.getAbsolutePath());
+            }
         } catch (IOException e) {
             log.error(e.getMessage(), e);
-        } finally {
-            if (fos != null) {
-                try {
-                    fos.close();
-                } catch (IOException e) {
-                    log.error(e.getMessage(), e);
-                }
-            }
         }
         return file;
     }

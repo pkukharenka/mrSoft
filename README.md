@@ -1,49 +1,53 @@
 [![Build Status](https://travis-ci.org/pkukharenka/mrSoft.svg?branch=master)](https://travis-ci.org/pkukharenka/mrSoft)
 [![codecov](https://codecov.io/gh/pkukharenka/mrSoft/branch/master/graph/badge.svg)](https://codecov.io/gh/pkukharenka/mrSoft)
 
-# Тестовое задание для MrSoft.by 
+# Spring boot + AngularJS + OpenCsv application.
 
- Spring boot + AngularJS application. Демо - https://mr-soft.herokuapp.com/
+Demo you can see by this url - https://mr-soft.herokuapp.com/
 
-### Запуск приложения на локальной машине
+### Start application locally
 ```
 git clone https://github.com/pkukharenka/mrSoft.git
 cd mr-test
 ./mvnw spring-boot:run
 ```
 
-*Доступ к приложению можно получить по адресу: http://localhost:8080/*
+*After launching the application, it will be available at - http://localhost:8080/*
 
-## Первое задание (First task):
+## First task:
 
 ![First Task](./src/main/resources/images/First.png)
 
-*Окно добавления (редактирования) категорий товаров позволяет добавлять, редактировать
-и удалять категории товаров.*
+*The window for adding (editing) product categories allows you to add, edit
+ and delete product categories*
 ![Category](./src/main/resources/images/Category.png)
 
-*Окно добавления (редактирования) товара предусматривает валидацию вводимых данных 
-на стороне клиента.*
+*The window for adding (editing) the products provides the validation of the input data
+ on the client side*
 ![Validation](./src/main/resources/images/Validation.png)
 
-## Второе задание (Second task):
+*The application allows you to download product data into a .csv file*
+![Download](./src/main/resources/images/Download.png)
 
-![Second Task](./src/main/resources/images/Second.png)
+*Also, the application allows you to upload product data into a database from the .csv file format.*
+![Upload](./src/main/resources/images/Upload.png)
 
-*Второе задание включает в себя поле для ввода пользовательских данных, две
-кнопки (ПО ДЛИНЕ и ПО ПОДСТРОКЕ), при нажатии на которые производится выборка значений в
-соответствии с введенными данными, а также кнопки для включения/выключения чувствительности регистра
-при выборке значений ПО ПОДСТРОКЕ.*
+## Second task:
 
-## Примечание
+![Second Task1](./src/main/resources/images/S1.png)  ![Second Task2](./src/main/resources/images/S5.png) ![Second Task3](./src/main/resources/images/S3.png)
 
-**Для функционирования второй задачи (Second Task) необходимо наличие плагина CORS, т.к.
-сервер, к котрому обращается приложение для получения данных
-не поддерживает кроссдоменные запросы.**
+*The second task includes a field for entering user data, two
+ buttons (by LENGTH and by SUBSTRING), when you click on which you select the values ​​in
+ according to the entered data, and also buttons for switching on / off the sensitivity of the register
+ when sampling the values ​​of the SUBSTRING software.
+ The peculiarity of the second task is the use of a proxy to execute a query on the required URL,
+ since the server to which the application accesses to retrieve data does not support cross-domain queries.*
+
+
 
 ## Database configuration
 
-По умолчанию тестовое приложение использует in-memory database H2, которая
-заполняется при запуске данными из фалйла ./resources/data.sql. 
+By default, the test application uses the in-memory database H2, which
+filled when starting from the file ./resources/data.sql. 
 
 

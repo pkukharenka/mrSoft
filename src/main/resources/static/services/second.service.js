@@ -4,13 +4,14 @@ secondService.$inject = ['$http', '$log'];
 
 function secondService($http, $log) {
 
+    const url = 'http://www.mrsoft.by/data.json';
+
     return {
         findValues: findValues
     };
 
-
     function findValues() {
-        return $http.get('http://www.mrsoft.by/data.json')
+        return $http.post('/second/', url)
             .then(funcComplete)
             .catch(funcError)
     }

@@ -4,8 +4,6 @@ import by.kpi.domain.Category;
 import by.kpi.repository.CategoryRepository;
 import by.kpi.utils.CsvTransform;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
