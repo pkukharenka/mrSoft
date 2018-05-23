@@ -1,19 +1,19 @@
 <div class="row">
     <div class="col-sm-3">
-        <input class="form-control" type="text" placeholder="Введите значение" ng-model="searchKey" style="margin-top: 10px; margin-left: 10px">
+        <input class="form-control" type="text" placeholder="{{ 'VALUE_PLACEHOLDER' | translate}}" ng-model="searchKey" style="margin-top: 10px; margin-left: 10px">
         <div class="btn-group-vertical">
-            <md-button ng-click="byLenght()">По длине</md-button>
-            <md-button ng-click="bySubstring()">По подстроке</md-button>
+            <md-button ng-click="byLenght()">{{ 'BUTTON.LENGTH' | translate}}</md-button>
+            <md-button ng-click="bySubstring()">{{ 'BUTTON.SUBSTRING' | translate}}</md-button>
         </div>
 
         <md-list-item>
-            <p>Чувствительность регистра</p>
+            <p>{{ 'SENSITIVE' | translate}}</p>
             <md-switch class="md-secondary" ng-model="sensitive"></md-switch>
         </md-list-item>
     </div>
     <div class="col-sm-9">
         <div class="row">
-            <h3>Найденные значения:</h3>
+            <h3>{{ 'FIND_VALUES' | translate}}</h3>
             <ul>
                 <li ng-repeat="val in filtredData">{{val}}</li>
             </ul>

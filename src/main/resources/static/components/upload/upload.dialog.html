@@ -1,7 +1,7 @@
 <md-dialog flex="40">
     <md-toolbar>
         <div class="md-toolbar-tools">
-            <h3>Форма загрузки</h3>
+            <h3>{{ 'UPLOAD.HEADER' | translate}}</h3>
             <span flex></span>
         </div>
     </md-toolbar>
@@ -9,16 +9,16 @@
     <md-dialog-content>
         <form name="uploadForm" ng-submit="uploadFile()">
             <div class="md-dialog-content">
-                <label>Выберите файл с данными</label>
+                <label>{{ 'UPLOAD.NAME' | translate}}</label>
                 <md-input-container class="md-block">
                     <input type="file" file-model="dataFile">
                     <div ng-if="invalid">
-                        <small class="text-muted" style="color: red">Файл должен иметь расширение .csv</small>
+                        <small class="text-muted" style="color: red">{{ 'UPLOAD.INVALID' | translate}}</small>
                     </div>
 
                 </md-input-container>
-                <button class="btn btn-primary" type="submit">Submit</button>
-                <button class="btn btn-warning" ng-click="cancelForm()">Cancel</button>
+                <button class="btn btn-primary" type="submit">{{ 'BUTTON.SUBMIT' | translate}}</button>
+                <button class="btn btn-warning" ng-click="cancelForm()">{{ 'BUTTON.CANCEL' | translate}}</button>
             </div>
         </form>
     </md-dialog-content>

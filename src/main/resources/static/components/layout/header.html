@@ -4,5 +4,27 @@
         style="border-color: #4cae4c">
     <md-nav-item md-nav-href="#" name="main">First task</md-nav-item>
     <md-nav-item md-nav-href="#second" name="second">Second task</md-nav-item>
+
+    <span flex></span>
+    <md-menu-bar>
+        <md-menu>
+            <md-button class="md-icon-button" aria-label="Favorite" ng-click="$mdMenu.open()">
+                <md-tooltip>{{ 'LANGUAGE' | translate }}</md-tooltip>
+                <md-icon md-svg-icon="{{ languageIcon }}" class="favorite-icon"></md-icon>
+            </md-button>
+            <md-menu-content>
+                <md-menu-item class="md-indent">
+                    <md-icon md-svg-src="icons/RU.svg"></md-icon>
+                    <md-button ng-click="changeLanguage('ru')">Русский</md-button>
+                </md-menu-item>
+                <md-menu-divider></md-menu-divider>
+                <md-menu-item class="md-indent">
+                    <md-icon md-svg-src="icons/USA.svg"></md-icon>
+                    <md-button ng-click="changeLanguage('en')">English</md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+    </md-menu-bar>
+
 </md-nav-bar>
 

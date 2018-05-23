@@ -1,7 +1,7 @@
 <md-dialog flex="50">
     <md-toolbar>
         <div class="md-toolbar-tools">
-            <h3>Category form</h3>
+            <h3>{{ 'CATEGORY_HEADER' | translate}}</h3>
             <span flex></span>
         </div>
     </md-toolbar>
@@ -12,12 +12,12 @@
                 <div class="col-sm-2">
                     <md-button class="md-fab md-mini md-warn" ng-disabled="categories | checkedFilter"
                                ng-click="deleteCategories()" style="margin-right: 40px">
-                        <md-tooltip>Удалить продукт</md-tooltip>
+                        <md-tooltip>{{ 'DELETE' | translate}}</md-tooltip>
                         <md-icon md-svg-src="icons/bin.svg"></md-icon>
                     </md-button>
                 </div>
                 <div class="col-sm-10">
-                    <input placeholder="Поиск категории..." ng-model="categoryKeyword" class="form-control"
+                    <input placeholder="{{ 'SEARCH' | translate}}" ng-model="categoryKeyword" class="form-control"
                            style="margin-top: 6px">
 
                 </div>
@@ -26,7 +26,7 @@
                         <thead>
                         <tr>
                             <th><input type="checkbox" ng-model="checkedCategory" ng-click="checkAllCategories()"></th>
-                            <th>Категория</th>
+                            <th>{{ 'TH.CATEGORY' | translate}}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -41,20 +41,20 @@
             </div>
             <div class="col-sm-6">
                 <form name="categoryForm" novalidate ng-submit="saveCategory(category)">
-                    <h4>Редактирование категории:</h4>
+                    <h4>{{ 'CATEGORY_UPDATE_HEADER'  | translate}}</h4>
                     <md-input-container class="md-block">
-                        <label>Категория товара:</label>
+                        <label>{{ 'CATEGORY.NAME' | translate}}</label>
                         <input type="text"
                                name="category"
                                ng-model="category.name">
                     </md-input-container>
-                    <button class="btn btn-primary" type="submit">Submit</button>
+                    <button class="btn btn-primary" type="submit">{{ 'BUTTON.SUBMIT' | translate}}</button>
                 </form>
             </div>
         </div>
     </md-dialog-content>
     <md-dialog-actions layout="row">
-        <button class="btn btn-warning" ng-click="cancelForm()">Cancel</button>
+        <button class="btn btn-warning" ng-click="cancelForm()">{{ 'BUTTON.CANCEL' | translate}}</button>
 
     </md-dialog-actions>
 </md-dialog>

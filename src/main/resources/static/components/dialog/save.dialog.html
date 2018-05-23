@@ -1,7 +1,7 @@
 <md-dialog flex="40">
     <md-toolbar>
         <div class="md-toolbar-tools">
-            <h3>Форма добавления (обновления) продукта</h3>
+            <h3>{{ 'DIALOG.HEADER' | translate }}</h3>
             <span flex></span>
         </div>
     </md-toolbar>
@@ -10,62 +10,65 @@
         <form name="productForm" novalidate ng-submit="saveProduct(product)">
             <div class="md-dialog-content">
                 <md-input-container class="md-block">
-                    <label>Категория товара: </label>
-                    <md-select name="category" ng-model="product.category.id" placeholder="Категория" required>
+                    <label>{{ 'CATEGORY.NAME' | translate }}</label>
+                    <md-select name="category"
+                               ng-model="product.category.id"
+                               placeholder="{{ 'CATEGORY.PLACEHOLDER' | translate }}"
+                               required>
                         <md-option ng-repeat="cat in categories"
                                    value="{{cat.id}}"
                                    ng-selected="cat.id == product.category.id">{{cat.name}}
                         </md-option>
                     </md-select>
                     <div ng-messages="productForm.category.$error">
-                        <div ng-message="required">Укажите категорию товара</div>
+                        <div ng-message="required">{{ 'REQUIRED' | translate}}</div>
                     </div>
                 </md-input-container>
                 <br>
                 <md-input-container class="md-block">
-                    <label>Название товара:</label>
+                    <label>{{ 'PRODUCT.NAME' | translate}}</label>
                     <input type="text"
                            name="name"
                            ng-model="product.name"
                            md-maxlength="255"
                            required>
                     <div ng-messages="productForm.name.$error">
-                        <div ng-message="required">Укажите наименование товара</div>
-                        <div ng-message="md-maxlength">Наименование товара должно быть не более 255 символов</div>
+                        <div ng-message="required">{{ 'REQUIRED' | translate}}</div>
+                        <div ng-message="md-maxlength">{{ 'PRODUCT.NAME_LENGTH' | translate}}</div>
                     </div>
                 </md-input-container>
                 <md-input-container class="md-block">
-                    <label>Цена товара:</label>
+                    <label>{{ 'PRODUCT.PRICE' | translate}}</label>
                     <input type="number"
                            name="price"
                            ng-model="product.price"
                            required>
                     <div ng-messages="productForm.price.$error">
-                        <div ng-message="required">Укажите цену товара</div>
+                        <div ng-message="required">{{ 'REQUIRED' | translate}}</div>
                     </div>
                 </md-input-container>
                 <md-input-container class="md-block">
-                    <label>Количество товара:</label>
+                    <label>{{ 'PRODUCT.COUNT' | translate}}</label>
                     <input type="number"
                            name="count"
                            ng-model="product.count"
                            required>
                     <div ng-messages="productForm.count.$error">
-                        <div ng-message="required">Укажите количество товара</div>
+                        <div ng-message="required">{{ 'REQUIRED' | translate}}</div>
                     </div>
                 </md-input-container>
                 <md-input-container class="md-block">
-                    <label>Описание товара:</label>
+                    <label>{{ 'PRODUCT.DESC' | translate}}</label>
                     <textarea
                             name="description"
                             ng-model="product.description"
                             md-maxlength="1000"></textarea>
                     <div ng-messages="productForm.count.$error">
-                        <div ng-message="md-maxlength">Описание не более 1000 символов</div>
+                        <div ng-message="md-maxlength">{{ 'PRODUCT.DESC_LENGTH' | translate}}</div>
                     </div>
                 </md-input-container>
-                <button class="btn btn-primary" type="submit">Submit</button>
-                <button class="btn btn-warning" ng-click="cancelForm()">Cancel</button>
+                <button class="btn btn-primary" type="submit">{{ 'BUTTON.SUBMIT' | translate}}</button>
+                <button class="btn btn-warning" ng-click="cancelForm()">{{ 'BUTTON.CANCEL' | translate}}</button>
             </div>
         </form>
     </md-dialog-content>

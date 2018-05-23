@@ -12,9 +12,11 @@ function DialogController($scope, $mdDialog, dataProduct, categories, productSer
     };
 
     function saveProduct(product) {
-        productService.saveProduct(product)
-            .then(function () {
-                $mdDialog.hide();
-            });
+        if ($scope.productForm.$valid) {
+            productService.saveProduct(product)
+                .then(function () {
+                    $mdDialog.hide();
+                });
+        }
     }
 }

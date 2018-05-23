@@ -14,6 +14,10 @@ cd mr-test
 
 *After launching the application, it will be available at - http://localhost:8080/*
 
+**The application allows to change the language.**
+![First Task](./src/main/resources/images/i18n.png)
+
+
 ## First task:
 
 ![First Task](./src/main/resources/images/First.png)
