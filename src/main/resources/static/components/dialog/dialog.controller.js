@@ -1,22 +1,33 @@
-angular.module('app').controller('DialogController', DialogController);
+//wrapped
 
-DialogController.$inject = ['$scope', '$mdDialog', 'dataProduct', 'categories', 'productService'];
+(function () {
 
-function DialogController($scope, $mdDialog, dataProduct, categories, productService) {
-    $scope.product = dataProduct;
-    $scope.categories = categories;
-    $scope.saveProduct = saveProduct;
+    'use strict';
 
-    $scope.cancelForm = function () {
-        $mdDialog.cancel();
-    };
+    angular.module('app').controller('DialogController', DialogController);
 
-    function saveProduct(product) {
-        if ($scope.productForm.$valid) {
-            productService.saveProduct(product)
-                .then(function () {
-                    $mdDialog.hide();
-                });
+    DialogController.$inject = ['$mdDialog', 'dataProduct', 'categories', 'productService'];
+
+    function DialogController($mdDialog, dataProduct, categories, productService) {
+
+        var vm = this;
+
+        vm.product = dataProduct;
+        vm.categories = categories;
+        vm.saveProduct = saveProduct;
+        vm.cancelForm = cancelForm;
+
+        function cancelForm() {
+            $mdDialog.cancel();
+        }
+
+        function saveProduct() {
+            if (vm.productForm.$valid) {
+                productService.saveProduct(vm.product)
+                    .then(function () {
+                        $mdDialog.hide();
+                    });
+            }
         }
     }
-}
+}());

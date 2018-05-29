@@ -1,26 +1,33 @@
-angular.module('app').factory('secondService', secondService);
+//wrapped
 
-secondService.$inject = ['$http', '$log'];
+(function () {
+    'use strict';
 
-function secondService($http, $log) {
+    angular.module('app').factory('secondService', secondService);
 
-    const url = 'http://www.mrsoft.by/data.json';
+    secondService.$inject = ['$http', '$log'];
 
-    return {
-        findValues: findValues
-    };
+    function secondService($http, $log) {
 
-    function findValues() {
-        return $http.post('/second/', url)
-            .then(funcComplete)
-            .catch(funcError)
+        const url = 'http://www.mrsoft.by/data.json';
+
+        return {
+            findValues: findValues
+        };
+
+        function findValues() {
+            return $http.post('/second/', url)
+                .then(funcComplete)
+                .catch(funcError)
+        }
+
+        function funcComplete(response) {
+            return response.data;
+        }
+
+        function funcError(error) {
+            $log.error('Handle error ', error);
+        }
     }
+}());
 
-    function funcComplete(response) {
-        return response.data;
-    }
-
-    function funcError(error) {
-        $log.error('Handle error ', error);
-    }
-}

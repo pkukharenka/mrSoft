@@ -1,62 +1,70 @@
-angular.module('app').controller('CategoryController', CategoryController);
+//wrapped
 
-CategoryController.$inject = ['$scope', '$mdDialog', '$q', 'productService', 'categories'];
+(function () {
+    'use strict';
 
-function CategoryController($scope, $mdDialog, $q, productService, categories) {
+    angular.module('app').controller('CategoryController', CategoryController);
 
-    $scope.categories = categories;
-    $scope.category = {};
-    $scope.checkedCategory = false;
-    $scope.categoryKeyword = '';
+    CategoryController.$inject = ['$mdDialog', '$q', 'productService', 'categories'];
 
-    $scope.manageCategory = manageCategory;
-    $scope.saveCategory = saveCategory;
-    $scope.deleteCategories = deleteCategories;
-    $scope.checkAllCategories = checkAllCategories;
+    function CategoryController($mdDialog, $q, productService, categories) {
 
-    $scope.cancelForm = function () {
-        $mdDialog.cancel();
-    };
+        var vm = this;
+        vm.categories = categories;
+        vm.category = {};
+        vm.checkedCategory = false;
+        vm.categoryKeyword = '';
 
-    function manageCategory(category) {
-        $scope.category = category;
-    }
+        vm.manageCategory = manageCategory;
+        vm.saveCategory = saveCategory;
+        vm.deleteCategories = deleteCategories;
+        vm.checkAllCategories = checkAllCategories;
 
-    function saveCategory(category) {
-        productService.saveCategory(category)
-            .then(function () {
+        vm.cancelForm = function () {
+            $mdDialog.cancel();
+        };
+
+        function manageCategory(category) {
+            vm.category = category;
+        }
+
+        function saveCategory() {
+            productService.saveCategory(vm.category)
+                .then(function () {
+                    productService.getCategories()
+                        .then(function (response) {
+                            vm.categories = response;
+                            vm.category = {};
+                        });
+                })
+        }
+
+        function checkAllCategories() {
+            if (vm.checkedCategory) {
+                vm.categories.forEach(function (el) {
+                    el.checked = true;
+                })
+            } else {
+                vm.categories.forEach(function (el) {
+                    el.checked = false;
+                })
+            }
+        }
+
+        function deleteCategories() {
+            var promises = [];
+            vm.categories.forEach(function (category) {
+                if (category.checked) {
+                    promises.push(productService.deleteCategory(category.id))
+                }
+            });
+            $q.all(promises).then(function () {
                 productService.getCategories()
                     .then(function (response) {
-                        $scope.categories = response;
-                        $scope.category = {};
+                        vm.categories = response;
                     });
-            })
-    }
-
-    function checkAllCategories() {
-        if ($scope.checkedCategory) {
-            $scope.categories.forEach(function (el) {
-                el.checked = true;
-            })
-        } else {
-            $scope.categories.forEach(function (el) {
-                el.checked = false;
             })
         }
     }
+}());
 
-    function deleteCategories() {
-        var promises = [];
-        $scope.categories.forEach(function (category) {
-            if (category.checked) {
-                promises.push(productService.deleteCategory(category.id))
-            }
-        });
-        $q.all(promises).then(function () {
-            productService.getCategories()
-                .then(function (response) {
-                    $scope.categories = response;
-                });
-        })
-    }
-}

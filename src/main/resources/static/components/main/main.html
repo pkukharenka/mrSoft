@@ -1,14 +1,14 @@
 <div class="row">
     <div class="col-sm-2">
-        <md-button class="md-fab md-mini md-primary" ng-click="addCategory()">
+        <md-button class="md-fab md-mini md-primary" ng-click="main.addCategory()">
             <md-tooltip>{{ 'BUTTON.TOOLTIP.ADD_CAT' | translate}}</md-tooltip>
             <md-icon md-svg-src="icons/folder-open.svg"></md-icon>
         </md-button>
-        <md-button class="md-fab md-mini md-primary" ng-click="manageProduct($event)">
+        <md-button class="md-fab md-mini md-primary" ng-click="main.manageProduct($event)">
             <md-tooltip>{{ 'BUTTON.TOOLTIP.ADD_PRODUCT' | translate}}</md-tooltip>
             <md-icon md-svg-src="icons/plus.svg"></md-icon>
         </md-button>
-        <md-button class="md-fab md-mini md-warn" ng-disabled="products | checkedFilter" ng-click="deleteProducts()"
+        <md-button class="md-fab md-mini md-warn" ng-disabled="main.products | checkedFilter" ng-click="main.deleteProducts()"
                    aria-label="Use Android">
             <md-tooltip>{{ 'BUTTON.TOOLTIP.DELETE' | translate}}</md-tooltip>
             <md-icon md-svg-src="icons/bin.svg"></md-icon>
@@ -16,14 +16,14 @@
     </div>
 
     <div class="col-sm-8">
-        <input placeholder="{{ 'SEARCH' | translate}}" ng-model="searchKeyword" class="form-control" style="margin-top: 6px">
+        <input placeholder="{{ 'SEARCH' | translate}}" ng-model="main.searchKeyword" class="form-control" style="margin-top: 6px">
     </div>
     <div class="col-sm-2">
-        <md-button class="md-fab md-mini md-primary" ng-click="upload()">
+        <md-button class="md-fab md-mini md-primary" ng-click="main.upload()">
             <md-tooltip>{{ 'BUTTON.TOOLTIP.DOWNLOAD' | translate}}</md-tooltip>
             <md-icon md-svg-src="icons/download.svg"></md-icon>
         </md-button>
-        <md-button class="md-fab md-mini md-primary" ng-click="download()">
+        <md-button class="md-fab md-mini md-primary" ng-click="main.download()">
             <md-tooltip>{{ 'BUTTON.TOOLTIP.UPLOAD' | translate}}</md-tooltip>
             <md-icon md-svg-src="icons/upload.svg"></md-icon>
         </md-button>
@@ -37,7 +37,7 @@
         <table class="table table-hover">
             <thead>
             <tr>
-                <th><input type="checkbox" ng-model="checked" ng-click="check()"></th>
+                <th><input type="checkbox" ng-model="main.checked" ng-click="main.check()"></th>
                 <th>{{ 'TH.CATEGORY' | translate}}</th>
                 <th>{{ 'TH.PRODUCT' | translate}}</th>
                 <th>{{ 'TH.PRICE' | translate}}</th>
@@ -46,15 +46,13 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="product in products | filter: searchKeyword">
-                <td><input type="checkbox" ng-model="product.checked" ng-click="deleteActive(product)"></td>
-                <td ng-click="manageProduct($event, product)">{{product.category.name}}</td>
-                <td ng-click="manageProduct($event, product)">{{product.name}}</td>
-                <td ng-click="manageProduct($event, product)">{{product.price}}</td>
-                <td ng-click="manageProduct($event, product)">{{product.count}}</td>
-                <td ng-click="manageProduct($event, product)">{{product.description}}</td>
-
-
+            <tr ng-repeat="product in main.products | filter: main.searchKeyword">
+                <td><input type="checkbox" ng-model="product.checked"></td>
+                <td ng-click="main.manageProduct($event, product)">{{product.category.name}}</td>
+                <td ng-click="main.manageProduct($event, product)">{{product.name}}</td>
+                <td ng-click="main.manageProduct($event, product)">{{product.price}}</td>
+                <td ng-click="main.manageProduct($event, product)">{{product.count}}</td>
+                <td ng-click="main.manageProduct($event, product)">{{product.description}}</td>
             </tr>
             </tbody>
         </table>

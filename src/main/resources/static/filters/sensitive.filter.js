@@ -1,14 +1,21 @@
-angular.module('app').filter('sensitiveFilter', sensitiveFilter);
+//wrapped
 
-function sensitiveFilter() {
-    return function (items, value) {
-        var patt = new RegExp(value);
-        var filtred = [];
-        items.forEach(function (item) {
-            if (patt.test(item)) {
-                filtred.push(item)
-            }
-        });
-        return filtred;
+(function () {
+    'use strict';
+
+    angular.module('app').filter('sensitiveFilter', sensitiveFilter);
+
+    function sensitiveFilter() {
+        return function (items, value) {
+            var pattern = new RegExp(value);
+            var filtredData = [];
+            items.forEach(function (item) {
+                if (pattern.test(item)) {
+                    filtredData.push(item)
+                }
+            });
+            return filtredData;
+        }
     }
-}
+}());
+

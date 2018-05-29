@@ -7,18 +7,18 @@
     </md-toolbar>
 
     <md-dialog-content>
-        <form name="uploadForm" ng-submit="uploadFile()">
+        <form name="uploadForm" ng-submit="vm.uploadFile()">
             <div class="md-dialog-content">
                 <label>{{ 'UPLOAD.NAME' | translate}}</label>
                 <md-input-container class="md-block">
-                    <input type="file" file-model="dataFile">
-                    <div ng-if="invalid">
+                    <input type="file" file-model="vm.dataFile">
+                    <div ng-if="vm.invalid">
                         <small class="text-muted" style="color: red">{{ 'UPLOAD.INVALID' | translate}}</small>
                     </div>
 
                 </md-input-container>
                 <button class="btn btn-primary" type="submit">{{ 'BUTTON.SUBMIT' | translate}}</button>
-                <button class="btn btn-warning" ng-click="cancelForm()">{{ 'BUTTON.CANCEL' | translate}}</button>
+                <button class="btn btn-warning" ng-click="vm.cancelForm()">{{ 'BUTTON.CANCEL' | translate}}</button>
             </div>
         </form>
     </md-dialog-content>

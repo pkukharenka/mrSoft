@@ -1,20 +1,27 @@
-angular.module('app').controller('LayoutController', LayoutController);
+//wrapped
 
-LayoutController.$inject = ['$scope', '$translate'];
+(function () {
+    'use strict';
 
-function LayoutController($scope, $translate) {
+    angular.module('app').controller('LayoutController', LayoutController);
 
-    $scope.currentNavItem = 'main';
-    $scope.changeLanguage = changeLanguage;
-    $scope.languageIcon = 'icons/USA.svg';
+    LayoutController.$inject = ['$translate'];
 
-    function changeLanguage(type) {
-        if (type === "ru") {
-            $scope.languageIcon = 'icons/RU.svg';
-        } else {
-            $scope.languageIcon = 'icons/USA.svg';
+    function LayoutController($translate) {
+
+        var vm = this;
+
+        vm.currentNavItem = 'main';
+        vm.changeLanguage = changeLanguage;
+        vm.languageIcon = 'icons/USA.svg';
+
+        function changeLanguage(type) {
+            if (type === "ru") {
+                vm.languageIcon = 'icons/RU.svg';
+            } else {
+                vm.languageIcon = 'icons/USA.svg';
+            }
+            $translate.use(type)
         }
-        $translate.use(type)
     }
-
-}
+}());

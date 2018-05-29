@@ -7,20 +7,20 @@
     </md-toolbar>
 
     <md-dialog-content>
-        <form name="productForm" novalidate ng-submit="saveProduct(product)">
+        <form name="vm.productForm" novalidate ng-submit="vm.saveProduct()">
             <div class="md-dialog-content">
                 <md-input-container class="md-block">
                     <label>{{ 'CATEGORY.NAME' | translate }}</label>
                     <md-select name="category"
-                               ng-model="product.category.id"
+                               ng-model="vm.product.category.id"
                                placeholder="{{ 'CATEGORY.PLACEHOLDER' | translate }}"
                                required>
-                        <md-option ng-repeat="cat in categories"
+                        <md-option ng-repeat="cat in vm.categories"
                                    value="{{cat.id}}"
-                                   ng-selected="cat.id == product.category.id">{{cat.name}}
+                                   ng-selected="cat.id == vm.product.category.id">{{cat.name}}
                         </md-option>
                     </md-select>
-                    <div ng-messages="productForm.category.$error">
+                    <div ng-messages="vm.productForm.category.$error">
                         <div ng-message="required">{{ 'REQUIRED' | translate}}</div>
                     </div>
                 </md-input-container>
@@ -29,10 +29,10 @@
                     <label>{{ 'PRODUCT.NAME' | translate}}</label>
                     <input type="text"
                            name="name"
-                           ng-model="product.name"
+                           ng-model="vm.product.name"
                            md-maxlength="255"
                            required>
-                    <div ng-messages="productForm.name.$error">
+                    <div ng-messages="vm.productForm.name.$error">
                         <div ng-message="required">{{ 'REQUIRED' | translate}}</div>
                         <div ng-message="md-maxlength">{{ 'PRODUCT.NAME_LENGTH' | translate}}</div>
                     </div>
@@ -41,9 +41,9 @@
                     <label>{{ 'PRODUCT.PRICE' | translate}}</label>
                     <input type="number"
                            name="price"
-                           ng-model="product.price"
+                           ng-model="vm.product.price"
                            required>
-                    <div ng-messages="productForm.price.$error">
+                    <div ng-messages="vm.productForm.price.$error">
                         <div ng-message="required">{{ 'REQUIRED' | translate}}</div>
                     </div>
                 </md-input-container>
@@ -51,9 +51,9 @@
                     <label>{{ 'PRODUCT.COUNT' | translate}}</label>
                     <input type="number"
                            name="count"
-                           ng-model="product.count"
+                           ng-model="vm.product.count"
                            required>
-                    <div ng-messages="productForm.count.$error">
+                    <div ng-messages="vm.productForm.count.$error">
                         <div ng-message="required">{{ 'REQUIRED' | translate}}</div>
                     </div>
                 </md-input-container>
@@ -61,14 +61,14 @@
                     <label>{{ 'PRODUCT.DESC' | translate}}</label>
                     <textarea
                             name="description"
-                            ng-model="product.description"
+                            ng-model="vm.product.description"
                             md-maxlength="1000"></textarea>
-                    <div ng-messages="productForm.count.$error">
+                    <div ng-messages="vm.productForm.count.$error">
                         <div ng-message="md-maxlength">{{ 'PRODUCT.DESC_LENGTH' | translate}}</div>
                     </div>
                 </md-input-container>
                 <button class="btn btn-primary" type="submit">{{ 'BUTTON.SUBMIT' | translate}}</button>
-                <button class="btn btn-warning" ng-click="cancelForm()">{{ 'BUTTON.CANCEL' | translate}}</button>
+                <button class="btn btn-warning" ng-click="vm.cancelForm()">{{ 'BUTTON.CANCEL' | translate}}</button>
             </div>
         </form>
     </md-dialog-content>

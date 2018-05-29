@@ -1,30 +1,32 @@
-angular.module('app').controller('SecondController', SecondController);
+//wrapped
 
-SecondController.$inject = ['$scope', '$filter', 'getDataFromMrSoft', 'secondService'];
+(function () {
+    'use strict';
 
-function SecondController($scope, $filter, getDataFromMrSoft) {
+    angular.module('app').controller('SecondController', SecondController);
 
-    $scope.byLenght = byLenght;
-    $scope.bySubstring = bySubstring;
-    $scope.searchKey = '';
-    $scope.sensitive = '';
-    $scope.filtredData = [];
-    var testValues = getDataFromMrSoft;
+    SecondController.$inject = ['$filter', 'getDataFromMrSoft', 'secondService'];
+
+    function SecondController($filter, getDataFromMrSoft) {
+        var vm = this;
+        vm.byLength = byLength;
+        vm.bySubstring = bySubstring;
+        vm.searchKey = '';
+        vm.sensitive = '';
+        vm.filtredData = [];
+        var testValues = getDataFromMrSoft;
 
 
-    function byLenght() {
-        console.log($scope.filtredData);
-        $scope.filtredData = $filter('lengthFilter')(testValues.data, $scope.searchKey);
-    }
-
-    function bySubstring() {
-        if ($scope.sensitive) {
-            $scope.filtredData = $filter('sensitiveFilter')(testValues.data, $scope.searchKey);
-
-        } else {
-            $scope.filtredData = $filter('filter')(testValues.data, $scope.searchKey);
-
+        function byLength() {
+            vm.filtredData = $filter('lengthFilter')(testValues.data, vm.searchKey);
         }
 
+        function bySubstring() {
+            if (vm.sensitive) {
+                vm.filtredData = $filter('sensitiveFilter')(testValues.data, vm.searchKey);
+            } else {
+                vm.filtredData = $filter('filter')(testValues.data, vm.searchKey);
+            }
+        }
     }
-}
+}());

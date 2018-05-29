@@ -9,7 +9,7 @@
 </head>
 
 <body ng-app="app" ng-cloak>
-<div ng-include="'./components/layout/header.html'" ng-controller="LayoutController"></div>
+<div ng-include="'./components/layout/header.html'" ng-controller="LayoutController as vm"></div>
 <div class="container-fluid">
     <div ng-view id="container"></div>
 </div>

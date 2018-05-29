@@ -1,25 +1,32 @@
-angular.module('app').directive('fileModel', fileModel);
+//wrapped
 
-fileModel.$injetc = ['$parse'];
+(function () {
+    'use strict';
 
-function fileModel($parse) {
-    return {
-        restrict: 'A',
-        link: link
-    };
+    angular.module('app').directive('fileModel', fileModel);
 
-    function link(scope, element, attrs) {
-        var model = $parse(attrs.fileModel);
-        var modelSetter = model.assign;
+    fileModel.$injetc = ['$parse'];
 
-        element.bind('change', function(){
-            var files = [];
-            angular.forEach(element[0].files, function (file) {
-                files.push(file)
+    function fileModel($parse) {
+        return {
+            restrict: 'A',
+            link: link
+        };
+
+        function link(scope, element, attrs) {
+            var model = $parse(attrs.fileModel);
+            var modelSetter = model.assign;
+
+            element.bind('change', function(){
+                var files = [];
+                angular.forEach(element[0].files, function (file) {
+                    files.push(file)
+                });
+                scope.$apply(function(){
+                    modelSetter(scope, files);
+                });
             });
-            scope.$apply(function(){
-                modelSetter(scope, files);
-            });
-        });
+        }
     }
-}
+}());
+

@@ -1,91 +1,99 @@
-angular.module('app').controller('MainController', MainController);
+//wrapped
 
-MainController.$injetc = ['$scope', '$mdDialog', '$route', '$q', '$window',
-    'getAllProducts', 'getCategories', 'productService'];
+(function () {
+    'use strict';
 
-function MainController($scope, $mdDialog, $route, $q, $window,
-                        getAllProducts, getCategories, productService) {
+    angular.module('app').controller('MainController', MainController);
 
-    $scope.products = getAllProducts;
-    $scope.categories = getCategories;
-    $scope.checked = false;
-    $scope.searchKeyword = '';
+    MainController.$injetc = ['$mdDialog', '$route', '$q', '$window',
+        'getAllProducts', 'getCategories', 'productService'];
 
-    $scope.manageProduct = manageProduct;
-    $scope.deleteProducts = deleteProducts;
-    $scope.check = check;
-    $scope.download = download;
-    $scope.upload = upload;
-    $scope.addCategory = addCategory;
+    function MainController($mdDialog, $route, $q, $window,
+                            getAllProducts, getCategories, productService) {
 
-    function manageProduct(ev, product) {
-        $mdDialog.show({
-            locals: {
-                dataProduct: product,
-                categories: $scope.categories
-            },
-            controller: DialogController,
-            templateUrl: './components/dialog/save.dialog.html',
-            parent: angular.element(document.body),
-            targetEvent: ev,
-            onRemoving: updateTable,
-            clickOutsideToClose: true
-        })
-    }
+        var vm = this;
 
-    function updateTable() {
-        $route.reload();
-    }
+        vm.products = getAllProducts;
+        vm.categories = getCategories;
+        vm.checked = false;
+        vm.searchKeyword = '';
 
-    function check() {
-        if ($scope.checked) {
-            $scope.products.forEach(function (el) {
-                el.checked = true;
-            })
-        } else {
-            $scope.products.forEach(function (el) {
-                el.checked = false;
+        vm.manageProduct = manageProduct;
+        vm.deleteProducts = deleteProducts;
+        vm.check = check;
+        vm.download = download;
+        vm.upload = upload;
+        vm.addCategory = addCategory;
+
+        function manageProduct(ev, product) {
+            $mdDialog.show({
+                locals: {
+                    dataProduct: product,
+                    categories: vm.categories
+                },
+                controller: 'DialogController as vm',
+                templateUrl: './components/dialog/save.dialog.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                onRemoving: updateTable,
+                clickOutsideToClose: true
             })
         }
-    }
 
-    function deleteProducts() {
-        var promises = [];
-        $scope.products.forEach(function (product) {
-            if (product.checked) {
-                promises.push(productService.deleteProduct(product.id))
-            }
-        });
-        $q.all(promises).then(function () {
+        function updateTable() {
             $route.reload();
-        })
-    }
+        }
 
-    function download() {
-        $window.location = '/product/download';
-    }
+        function check() {
+            if (vm.checked) {
+                vm.products.forEach(function (el) {
+                    el.checked = true;
+                })
+            } else {
+                vm.products.forEach(function (el) {
+                    el.checked = false;
+                })
+            }
+        }
 
-    function upload() {
-        $mdDialog.show({
-            controller: UploadController,
-            templateUrl: './components/upload/upload.dialog.html',
-            parent: angular.element(document.body),
-            onRemoving: updateTable,
-            clickOutsideToClose: true
-        })
-    }
+        function deleteProducts() {
+            var promises = [];
+            vm.products.forEach(function (product) {
+                if (product.checked) {
+                    promises.push(productService.deleteProduct(product.id))
+                }
+            });
+            $q.all(promises).then(function () {
+                $route.reload();
+            })
+        }
 
-    function addCategory() {
-        $mdDialog.show({
-            controller: CategoryController,
-            locals: {
-                categories: $scope.categories
-            },
-            templateUrl: './components/category/category.html',
-            parent: angular.element(document.body),
-            onRemoving: updateTable,
-            clickOutsideToClose: true
-        })
-    }
+        function download() {
+            $window.location = '/product/download';
+        }
 
-}
+        function upload() {
+            $mdDialog.show({
+                controller: 'UploadController as vm',
+                templateUrl: './components/upload/upload.dialog.html',
+                parent: angular.element(document.body),
+                onRemoving: updateTable,
+                clickOutsideToClose: true
+            })
+        }
+
+        function addCategory() {
+            $mdDialog.show({
+                controller: 'CategoryController as vm',
+                locals: {
+                    categories: vm.categories
+                },
+                templateUrl: './components/category/category.html',
+                parent: angular.element(document.body),
+                onRemoving: updateTable,
+                clickOutsideToClose: true
+            })
+        }
+
+    }
+}());

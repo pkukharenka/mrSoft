@@ -1,28 +1,38 @@
-angular.module('app').controller('UploadController', UploadController);
+//wrapped
 
-UploadController.$inject = ['$scope', '$mdDialog', 'productService'];
+(function () {
+    'use strict';
 
-function UploadController($scope, $mdDialog, productService) {
+    angular.module('app').controller('UploadController', UploadController);
 
-    $scope.dataFile = [];
-    $scope.invalid = false;
-    $scope.uploadFile = uploadFile;
-    $scope.cancelForm = cancelForm;
+    UploadController.$inject = ['$mdDialog', 'productService'];
 
-    function cancelForm() {
-        $mdDialog.cancel();
-    }
+    function UploadController($mdDialog, productService) {
 
-    function uploadFile() {
-        if ($scope.dataFile[0] !== undefined && $scope.dataFile[0].name.split('.').pop() === 'csv') {
-            $scope.invalid = false;
-            productService.upload($scope.dataFile)
-                .then(function () {
-                    $mdDialog.hide();
-                })
-        } else {
-            $scope.invalid = true;
+        var vm = this;
+        vm.dataFile = [];
+        vm.invalid = false;
+        vm.uploadFile = uploadFile;
+        vm.cancelForm = cancelForm;
+
+        function cancelForm() {
+            $mdDialog.cancel();
         }
 
+        function uploadFile() {
+            console.log(vm);
+            var file = vm.dataFile[0];
+            console.log(file);
+            if (file !== undefined && file.name.split('.').pop() === 'csv') {
+                vm.invalid = false;
+                productService.upload(file)
+                    .then(function () {
+                        $mdDialog.hide();
+                    })
+            } else {
+                vm.invalid = true;
+            }
+
+        }
     }
-}
+}());

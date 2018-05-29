@@ -10,14 +10,14 @@
         <div class="row" style="margin: 0">
             <div class="col-sm-6">
                 <div class="col-sm-2">
-                    <md-button class="md-fab md-mini md-warn" ng-disabled="categories | checkedFilter"
-                               ng-click="deleteCategories()" style="margin-right: 40px">
+                    <md-button class="md-fab md-mini md-warn" ng-disabled="vm.categories | checkedFilter"
+                               ng-click="vm.deleteCategories()" style="margin-right: 40px">
                         <md-tooltip>{{ 'DELETE' | translate}}</md-tooltip>
                         <md-icon md-svg-src="icons/bin.svg"></md-icon>
                     </md-button>
                 </div>
                 <div class="col-sm-10">
-                    <input placeholder="{{ 'SEARCH' | translate}}" ng-model="categoryKeyword" class="form-control"
+                    <input placeholder="{{ 'SEARCH' | translate}}" ng-model="vm.categoryKeyword" class="form-control"
                            style="margin-top: 6px">
 
                 </div>
@@ -25,14 +25,14 @@
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th><input type="checkbox" ng-model="checkedCategory" ng-click="checkAllCategories()"></th>
+                            <th><input type="checkbox" ng-model="vm.checkedCategory" ng-click="vm.checkAllCategories()"></th>
                             <th>{{ 'TH.CATEGORY' | translate}}</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="category in categories | filter: categoryKeyword">
+                        <tr ng-repeat="category in vm.categories | filter: vm.categoryKeyword">
                             <td><input type="checkbox" ng-model="category.checked"></td>
-                            <td ng-click="manageCategory(category)">{{category.name}}</td>
+                            <td ng-click="vm.manageCategory(category)">{{category.name}}</td>
                         </tr>
                         </tbody>
                     </table>
@@ -40,13 +40,13 @@
 
             </div>
             <div class="col-sm-6">
-                <form name="categoryForm" novalidate ng-submit="saveCategory(category)">
+                <form name="categoryForm" novalidate ng-submit="vm.saveCategory()">
                     <h4>{{ 'CATEGORY_UPDATE_HEADER'  | translate}}</h4>
                     <md-input-container class="md-block">
                         <label>{{ 'CATEGORY.NAME' | translate}}</label>
                         <input type="text"
                                name="category"
-                               ng-model="category.name">
+                               ng-model="vm.category.name">
                     </md-input-container>
                     <button class="btn btn-primary" type="submit">{{ 'BUTTON.SUBMIT' | translate}}</button>
                 </form>
@@ -54,7 +54,7 @@
         </div>
     </md-dialog-content>
     <md-dialog-actions layout="row">
-        <button class="btn btn-warning" ng-click="cancelForm()">{{ 'BUTTON.CANCEL' | translate}}</button>
+        <button class="btn btn-warning" ng-click="vm.cancelForm()">{{ 'BUTTON.CANCEL' | translate}}</button>
 
     </md-dialog-actions>
 </md-dialog>

@@ -1,13 +1,20 @@
-angular.module('app').filter('lengthFilter', lengthFilter);
+//wrapped
 
-function lengthFilter() {
-    return function (items, value) {
-        var filtred = [];
-        items.forEach(function (item) {
-            if (item.length > value) {
-                filtred.push(item)
-            }
-        });
-        return filtred;
+(function () {
+    'use strict';
+
+    angular.module('app').filter('lengthFilter', lengthFilter);
+
+    function lengthFilter() {
+        return function (items, value) {
+            var filtredData = [];
+            items.forEach(function (item) {
+                if (item.length > value) {
+                    filtredData.push(item)
+                }
+            });
+            return filtredData;
+        }
     }
-}
+}());
+
